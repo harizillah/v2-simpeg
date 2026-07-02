@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { FileText, Users, Calendar, TrendingUp, FileClock, BarChart3, PieChart, List } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { FileText, Users, Calendar, TrendingUp, FileClock, BarChart3, PieChart, List, Settings } from "lucide-react";
 
 const LAPORAN = [
   { label: "DUK", href: "/laporan/duk", icon: List, desc: "Daftar Urut Kepangkatan" },
@@ -19,7 +20,12 @@ export default function LaporanPage() {
   const router = useRouter();
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold">Laporan</h1>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">Laporan</h1>
+        <Button variant="outline" onClick={() => router.push("/laporan/template")}>
+          <Settings className="mr-2 h-4 w-4" /> Template
+        </Button>
+      </div>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {LAPORAN.map((l) => (
           <Card key={l.href} className="cursor-pointer hover:bg-muted/50 transition-colors" onClick={() => router.push(l.href)}>
