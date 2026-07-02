@@ -3,12 +3,14 @@
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import { usePegawaiDetail, useUpdatePegawai, useSoftDeletePegawai } from "@/hooks/use-pegawai";
+import { useMasterData } from "@/hooks/use-master-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
   Dialog,
   DialogContent,
@@ -217,8 +219,18 @@ export default function PegawaiDetailPage({ params }: { params: Promise<{ id: st
           </Card>
         </TabsContent>
 
+        {/* Tab: Pendidikan */}
+        <TabsContent value="pendidikan">
+          <PendidikanTab pegawaiId={id} data={(data as Record<string, unknown>).riwayat_pendidikan as unknown[]} />
+        </TabsContent>
+
+        {/* Tab: Jabatan RS */}
+        <TabsContent value="sertifikat">
+          <JabatanRSTab pegawaiId={id} data={(data as Record<string, unknown>).pegawai_jabatan_rs as unknown[]} />
+        </TabsContent>
+
         {/* Other tabs: placeholder */}
-        {["pendidikan", "sertifikat", "kgb", "dokumen", "audit"].map((tab) => (
+        {["kgb", "dokumen", "audit"].map((tab) => (
           <TabsContent key={tab} value={tab}>
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">
@@ -256,5 +268,181 @@ function InfoItem({ label, value, className }: { label: string; value?: string |
       <p className="text-sm text-muted-foreground">{label}</p>
       <p className="font-medium">{value || "-"}</p>
     </div>
+  );
+}
+
+function PendidikanTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[] | undefined }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const { data: tingkatPendidikan } = useMasterData("master_tingkat_pendidikan");
+  const [form, setForm] = useState({ tingkat_pendidikan_id: "", nama_universitas: "", nama_jurusan: "", tahun_lulus: "", nomor_ijazah: "" });
+
+  const handleAdd = async () => {
+    await fetch(`/api/pegawai/${pegawaiId}/riwayat-pendidikan`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tingkatPendidikanId: form.tingkat_pendidikan_id ? Number(form.tingkat_pendidikan_id) : undefined,
+        namaUniversitas: form.nama_universitas || undefined,
+        namaJurusan: form.nama_jurusan || undefined,
+        tahunLulus: form.tahun_lulus ? Number(form.tahun_lulus) : undefined,
+        nomorIjazah: form.nomor_ijazah || undefined,
+      }),
+    });
+    window.location.reload();
+  };
+
+  const handleDelete = async (riwayatId: string) => {
+    await fetch(`/api/pegawai/${pegawaiId}/riwayat-pendidikan/${riwayatId}`, { method: "DELETE" });
+    window.location.reload();
+  };
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Riwayat Pendidikan</CardTitle>
+        <Button size="sm" onClick={() => setShowAdd(true)}>Tambah</Button>
+      </CardHeader>
+      <CardContent>
+        {!data || data.length === 0 ? (
+          <p className="py-8 text-center text-muted-foreground">Belum ada riwayat pendidikan</p>
+        ) : (
+          <div className="space-y-3">
+            {data.map((item) => {
+              const i = item as Record<string, unknown>;
+              return (
+                <div key={String(i.id)} className="flex items-center justify-between rounded-lg border p-3">
+                  <div>
+                    <p className="font-medium">{String((i.tingkat as { nama?: string } | null)?.nama || i.tingkat_text || "Tidak diketahui")}</p>
+                    <p className="text-sm text-muted-foreground">{String(i.nama_universitas || "-")} — {String(i.nama_jurusan || "-")}</p>
+                    <p className="text-xs text-muted-foreground">Lulus: {String(i.tahun_lulus || "-")} · Ijazah: {String(i.nomor_ijazah || "-")}</p>
+                  </div>
+                  <Button size="sm" variant="ghost" onClick={() => handleDelete(String(i.id))}>Hapus</Button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+
+      <Dialog open={showAdd} onOpenChange={setShowAdd}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Tambah Riwayat Pendidikan</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label>Tingkat Pendidikan</Label>
+              <Select value={form.tingkat_pendidikan_id} onValueChange={(v) => setForm((f) => ({ ...f, tingkat_pendidikan_id: v ?? "" }))}>
+                <SelectTrigger><SelectValue placeholder="Pilih" /></SelectTrigger>
+                <SelectContent>
+                  {(tingkatPendidikan as { id: number; nama: string }[] | undefined)?.map((t) => (
+                    <SelectItem key={t.id} value={String(t.id)}>{t.nama}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              <Label>Universitas</Label>
+              <Input value={form.nama_universitas} onChange={(e) => setForm((f) => ({ ...f, nama_universitas: e.target.value }))} />
+            </div>
+            <div className="space-y-1">
+              <Label>Jurusan</Label>
+              <Input value={form.nama_jurusan} onChange={(e) => setForm((f) => ({ ...f, nama_jurusan: e.target.value }))} />
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <Label>Tahun Lulus</Label>
+                <Input type="number" value={form.tahun_lulus} onChange={(e) => setForm((f) => ({ ...f, tahun_lulus: e.target.value }))} />
+              </div>
+              <div className="space-y-1">
+                <Label>Nomor Ijazah</Label>
+                <Input value={form.nomor_ijazah} onChange={(e) => setForm((f) => ({ ...f, nomor_ijazah: e.target.value }))} />
+              </div>
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button>
+            <Button onClick={handleAdd}>Simpan</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Card>
+  );
+}
+
+function JabatanRSTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[] | undefined }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const { data: jabatanRS } = useMasterData("jabatan_rs");
+  const [form, setForm] = useState({ jabatan_rs_id: "", tmt_jabatan: "", keterangan: "" });
+
+  const handleAdd = async () => {
+    await fetch(`/api/pegawai/${pegawaiId}/jabatan-rs`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ jabatanRsId: Number(form.jabatan_rs_id), tmtJabatan: form.tmt_jabatan || undefined, keterangan: form.keterangan || undefined }),
+    });
+    window.location.reload();
+  };
+
+  const handleDelete = async (jabatanId: number) => {
+    await fetch(`/api/pegawai/${pegawaiId}/jabatan-rs?jabatanId=${jabatanId}`, { method: "DELETE" });
+    window.location.reload();
+  };
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <CardTitle>Riwayat Jabatan RS</CardTitle>
+        <Button size="sm" onClick={() => setShowAdd(true)}>Tambah</Button>
+      </CardHeader>
+      <CardContent>
+        {!data || data.length === 0 ? (
+          <p className="py-8 text-center text-muted-foreground">Belum ada riwayat jabatan</p>
+        ) : (
+          <div className="space-y-3">
+            {data.map((item) => {
+              const i = item as Record<string, unknown>;
+              return (
+                <div key={String(i.id)} className="flex items-center justify-between rounded-lg border p-3">
+                  <div>
+                    <p className="font-medium">{String((i.jabatan_rs as { nama?: string } | null)?.nama || "Tidak diketahui")}</p>
+                    <p className="text-sm text-muted-foreground">TMT: {formatDate(i.tmt_jabatan as string)}</p>
+                    {(i.keterangan as string) && <p className="text-xs text-muted-foreground">{String(i.keterangan)}</p>}
+                  </div>
+                  <Button size="sm" variant="ghost" onClick={() => handleDelete(i.id as number)}>Hapus</Button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+
+      <Dialog open={showAdd} onOpenChange={setShowAdd}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Tambah Jabatan RS</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1">
+              <Label>Jabatan RS</Label>
+              <Select value={form.jabatan_rs_id} onValueChange={(v) => setForm((f) => ({ ...f, jabatan_rs_id: v ?? "" }))}>
+                <SelectTrigger><SelectValue placeholder="Pilih" /></SelectTrigger>
+                <SelectContent>
+                  {(jabatanRS as { id: number; nama: string }[] | undefined)?.map((j) => (
+                    <SelectItem key={j.id} value={String(j.id)}>{j.nama}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1">
+              <Label>TMT Jabatan</Label>
+              <Input type="date" value={form.tmt_jabatan} onChange={(e) => setForm((f) => ({ ...f, tmt_jabatan: e.target.value }))} />
+            </div>
+            <div className="space-y-1">
+              <Label>Keterangan</Label>
+              <Input value={form.keterangan} onChange={(e) => setForm((f) => ({ ...f, keterangan: e.target.value }))} />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button>
+            <Button onClick={handleAdd}>Simpan</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Card>
   );
 }
