@@ -61,7 +61,28 @@
       "Bash(git commit *)",
       "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" a6765551abae7e0a1340d9b473586f62f41baf36 0b9d427)",
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('Next:', p.dependencies.next\\); console.log\\('React:', p.dependencies.react\\); console.log\\('ReactDOM:', p.dependencies['react-dom']\\)\")",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 0b9d427 0a213ce)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 2)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 0a213ce861a34bb0a832649fdbc96031272517d8 cf3ce5b)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 3)",
+      "mcp__plugin_supabase_supabase__apply_migration",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" cf3ce5b0c1448798b59c2243662293fb90b84701 d47bb3b)",
+      "mcp__plugin_supabase_supabase__list_migrations",
+      "mcp__plugin_supabase_supabase__execute_sql",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 4)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" d47bb3b59ee63248147a187d0187982ba54ab6fe 6ee4535)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 5)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 6ee4535425f95415f55e2543f17b0b8bc8de7cbb 8dc672f)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 6)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 8dc672fe7f5e8321710d06d5263a819b96311551 1fdbf79)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 7)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 1fdbf79d27d750ab782246f15bd7423f2830ac13 b9dee84)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 8)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" b9dee842edfc82c2432ebc867655276225ad4a19 c2b499d)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\task-brief\" \"docs/superpowers/plans/2026-07-02-phase-1-foundation.md\" 9)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" c2b499d72a2755fadd34fcf9199eb1003de0c7b4 3445d10)",
+      "Bash(bash \"C:\\\\Users\\\\HARIZILLAH\\\\.claude\\\\plugins\\\\cache\\\\claude-plugins-official\\\\superpowers\\\\6.1.0\\\\skills\\\\subagent-driven-development\\\\scripts\\\\review-package\" 20a88dba093879906aa2cf3f8575a81d6d4a3c3a 3445d10)"
     ]
   }
 }

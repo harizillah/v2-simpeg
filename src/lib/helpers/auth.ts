@@ -1,7 +1,6 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
-import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 
 const NIK_REGEX = /^\d{16}$/;
