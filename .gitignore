@@ -43,5 +43,8 @@ yarn-error.log*
 # supabase
 supabase/.temp/
 
+# playwright MCP traces
+.playwright-mcp/
+
 # misc
 *.pem
