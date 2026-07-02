@@ -1,0 +1,141 @@
+- generic [ref=f1e1]:
+  - generic [ref=f1e140] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=f1e141]:
+      - img [ref=f1e142]
+    - generic [ref=f1e145]:
+      - button "Open issues overlay" [ref=f1e146]:
+        - generic [ref=f1e147]:
+          - generic [ref=f1e148]: "2"
+          - generic [ref=f1e149]: "3"
+        - generic [ref=f1e150]:
+          - text: Issue
+          - generic [ref=f1e151]: s
+      - button "Collapse issues badge" [ref=f1e152]:
+        - img [ref=f1e153]
+  - generic [ref=f1e155]:
+    - banner [ref=f1e156]:
+      - complementary [ref=f1e157]:
+        - generic [ref=f1e158]:
+          - link "SIMPEG RSUD" [ref=f1e160] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f1e161]
+            - generic [ref=f1e163]: SIMPEG RSUD
+          - navigation [ref=f1e165]:
+            - link "Dashboard" [ref=f1e166] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=f1e167]
+              - generic [ref=f1e172]: Dashboard
+            - link "Data Pegawai" [ref=f1e173] [cursor=pointer]:
+              - /url: /pegawai
+              - img [ref=f1e174]
+              - generic [ref=f1e179]: Data Pegawai
+            - link "Master Data" [ref=f1e180] [cursor=pointer]:
+              - /url: /master-data
+              - img [ref=f1e181]
+              - generic [ref=f1e185]: Master Data
+            - link "Monitoring" [ref=f1e186] [cursor=pointer]:
+              - /url: /monitoring
+              - img [ref=f1e187]
+              - generic [ref=f1e189]: Monitoring
+            - link "Laporan" [ref=f1e190] [cursor=pointer]:
+              - /url: /laporan
+              - img [ref=f1e191]
+              - generic [ref=f1e194]: Laporan
+            - link "Verifikasi" [ref=f1e195] [cursor=pointer]:
+              - /url: /verifikasi
+              - img [ref=f1e196]
+              - generic [ref=f1e200]: Verifikasi
+            - link "Manajemen User" [ref=f1e201] [cursor=pointer]:
+              - /url: /user-management
+              - img [ref=f1e202]
+              - generic [ref=f1e204]: Manajemen User
+          - button "Keluar" [ref=f1e207]:
+            - img
+            - generic [ref=f1e208]: Keluar
+      - button
+      - button [ref=f1e209]:
+        - button [ref=f1e210]:
+          - generic [ref=f1e212]:
+            - img
+    - complementary [ref=f1e213]:
+      - generic [ref=f1e214]:
+        - link "SIMPEG RSUD" [ref=f1e216] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=f1e217]
+          - generic [ref=f1e219]: SIMPEG RSUD
+        - navigation [ref=f1e221]:
+          - link "Dashboard" [ref=f1e222] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f1e223]
+            - generic [ref=f1e228]: Dashboard
+          - link "Data Pegawai" [active] [ref=f1e229] [cursor=pointer]:
+            - /url: /pegawai
+            - img [ref=f1e230]
+            - generic [ref=f1e235]: Data Pegawai
+          - link "Master Data" [ref=f1e236] [cursor=pointer]:
+            - /url: /master-data
+            - img [ref=f1e237]
+            - generic [ref=f1e241]: Master Data
+          - link "Monitoring" [ref=f1e242] [cursor=pointer]:
+            - /url: /monitoring
+            - img [ref=f1e243]
+            - generic [ref=f1e245]: Monitoring
+          - link "Laporan" [ref=f1e246] [cursor=pointer]:
+            - /url: /laporan
+            - img [ref=f1e247]
+            - generic [ref=f1e250]: Laporan
+          - link "Verifikasi" [ref=f1e251] [cursor=pointer]:
+            - /url: /verifikasi
+            - img [ref=f1e252]
+            - generic [ref=f1e256]: Verifikasi
+          - link "Manajemen User" [ref=f1e257] [cursor=pointer]:
+            - /url: /user-management
+            - img [ref=f1e258]
+            - generic [ref=f1e260]: Manajemen User
+        - button "Keluar" [ref=f1e263]:
+          - img
+          - generic [ref=f1e264]: Keluar
+    - button
+    - main [ref=f1e265]:
+      - generic [ref=f1e267]:
+        - generic [ref=f1e268]:
+          - heading "Dashboard" [level=1] [ref=f1e269]
+          - paragraph [ref=f1e270]: Selamat datang di Sistem Informasi Manajemen Kepegawaian RSUD.
+        - generic [ref=f1e271]:
+          - generic [ref=f1e272]:
+            - generic [ref=f1e273]:
+              - generic [ref=f1e274]: Total Pegawai Aktif
+              - img [ref=f1e275]
+            - paragraph [ref=f1e281]: "1"
+          - generic [ref=f1e282]:
+            - generic [ref=f1e283]:
+              - generic [ref=f1e284]: PNS
+              - img [ref=f1e285]
+            - paragraph [ref=f1e290]: "1"
+          - generic [ref=f1e291]:
+            - generic [ref=f1e292]:
+              - generic [ref=f1e293]: Tenaga Medis
+              - img [ref=f1e294]
+            - paragraph [ref=f1e299]: "1"
+          - generic [ref=f1e300]:
+            - generic [ref=f1e301]:
+              - generic [ref=f1e302]: Laki-laki / Perempuan
+              - img [ref=f1e303]
+            - paragraph [ref=f1e309]: 1 / 0
+        - generic [ref=f1e310]:
+          - generic [ref=f1e311]:
+            - generic [ref=f1e313]:
+              - img [ref=f1e314]
+              - text: 10 Unit Teratas
+            - generic [ref=f1e320]:
+              - generic [ref=f1e321]:
+                - generic [ref=f1e322]: "1"
+                - text: Bagian Kepegawaian
+              - generic [ref=f1e323]: "1"
+          - generic [ref=f1e324]:
+            - generic [ref=f1e326]:
+              - img [ref=f1e327]
+              - text: Aktivitas Terbaru
+            - paragraph [ref=f1e331]: Belum ada aktivitas
+  - region "Notifications alt+T"
+  - alert [ref=f1e332]

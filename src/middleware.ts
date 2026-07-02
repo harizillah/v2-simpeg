@@ -68,14 +68,23 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // Ambil role user
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role_id")
-    .eq("id", session.user.id)
-    .single();
-
-  const roleId = profile?.role_id ?? 0;
+  // Ambil role user — pakai service role via REST API langsung bypass RLS
+  let roleId = 0;
+  try {
+    const profileRes = await fetch(
+      `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/profiles?id=eq.${session.user.id}&select=role_id`,
+      {
+        headers: {
+          apikey: process.env.SUPABASE_SERVICE_ROLE_KEY!,
+          Authorization: `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY!}`,
+        },
+      }
+    );
+    const profiles = await profileRes.json();
+    roleId = profiles?.[0]?.role_id ?? 0;
+  } catch {
+    roleId = 0;
+  }
 
   // Redirect root ke dashboard sesuai role
   if (pathname === "/") {

@@ -1,0 +1,61 @@
+[     143ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[     223ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:2477
+[   20265ms] [ERROR] In HTML, %s cannot be a descendant of <%s>.
+This will cause a hydration error.%s <button> button 
+
+  ...
+    <SegmentViewNode type="layout" pagePath="(admin)/la...">
+      <SegmentTrieNode>
+      <script>
+      <script>
+      <script>
+      <script>
+      <script>
+      <AdminLayout>
+        <div className="min-h-screen">
+          <Header>
+            <header className="sticky top...">
+              <Sidebar>
+                <aside>
+                <Sheet>
+                  <DialogRoot data-slot="sheet">
+                    <SheetTrigger>
+                      <DialogTrigger data-slot="sheet-trigger">
+>                       <button
+>                         type="button"
+>                         onClick={function}
+>                         onMouseDown={function}
+>                         onKeyDown={function}
+>                         onKeyUp={function}
+>                         onPointerDown={function}
+>                         tabIndex={0}
+>                         disabled={false}
+>                         data-base-ui-click-trigger=""
+>                         id="base-ui-_r_2_"
+>                         aria-haspopup="dialog"
+>                         aria-expanded={false}
+>                         aria-controls={undefined}
+>                         data-slot="sheet-trigger"
+>                         ref={function}
+>                       >
+                          <Button variant="ghost" size="icon" className="lg:hidden">
+                            <Button data-slot="button" className={"group/bu..."}>
+>                             <button
+>                               type="button"
+>                               onClick={function}
+>                               onMouseDown={function}
+>                               onKeyDown={function}
+>                               onKeyUp={function}
+>                               onPointerDown={function}
+>                               tabIndex={0}
+>                               disabled={false}
+>                               data-slot="button"
+>                               ref={function}
+>                               className={"group/button inline-flex shrink-0 items-center justify-center rounded-lg ..."}
+>                             >
+                    ...
+              ...
+          ...
+ @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318
+[   20266ms] [ERROR] <%s> cannot contain a nested %s.
+See this log for the ancestor stack trace. button <button> @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1ybzpk2._.js:3318

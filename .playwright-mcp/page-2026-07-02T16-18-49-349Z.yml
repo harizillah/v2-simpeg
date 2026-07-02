@@ -1,0 +1,39 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e28]:
+    - banner [ref=e29]:
+      - button "Buka menu" [ref=e30]:
+        - button "Buka menu" [ref=e31]:
+          - img
+          - generic [ref=e32]: Buka menu
+      - button [ref=e33]:
+        - button [ref=e34]:
+          - generic [ref=e36]:
+            - img
+    - button "Buka menu" [ref=e37]:
+      - button "Buka menu" [ref=e38]:
+        - img
+        - generic [ref=e39]: Buka menu
+    - main [ref=e40]
+  - region "Notifications alt+T":
+    - list:
+      - listitem [ref=e65]:
+        - button "Close toast" [ref=e66] [cursor=pointer]:
+          - img [ref=e67]
+        - img [ref=e71]
+        - generic [ref=e74]:
+          - generic [ref=e75]: Berhasil masuk
+          - generic [ref=e76]: Selamat datang di SIMPEG RSUD.
+  - generic [ref=e22] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=e23]:
+      - img [ref=e24]
+    - generic [ref=e77]:
+      - button "Open issues overlay" [ref=e78]:
+        - generic [ref=e79]:
+          - generic [ref=e80]: "1"
+          - generic [ref=e81]: "2"
+        - generic [ref=e82]:
+          - text: Issue
+          - generic [ref=e83]: s
+      - button "Collapse issues badge" [ref=e84]:
+        - img [ref=e85]
+  - alert [ref=e27]

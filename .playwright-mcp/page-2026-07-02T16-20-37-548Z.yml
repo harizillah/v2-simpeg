@@ -1,0 +1,109 @@
+- generic [active] [ref=f4e1]:
+  - generic [ref=f4e28]:
+    - banner [ref=f4e29]:
+      - complementary [ref=f4e30]:
+        - generic [ref=f4e31]:
+          - link "SIMPEG RSUD" [ref=f4e33] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f4e34]
+            - generic [ref=f4e36]: SIMPEG RSUD
+          - navigation [ref=f4e38]:
+            - link "Dashboard" [ref=f4e39] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=f4e40]
+              - generic [ref=f4e45]: Dashboard
+            - link "Data Pegawai" [ref=f4e46] [cursor=pointer]:
+              - /url: /pegawai
+              - img [ref=f4e47]
+              - generic [ref=f4e52]: Data Pegawai
+            - link "Master Data" [ref=f4e53] [cursor=pointer]:
+              - /url: /master-data
+              - img [ref=f4e54]
+              - generic [ref=f4e58]: Master Data
+            - link "Monitoring" [ref=f4e59] [cursor=pointer]:
+              - /url: /monitoring
+              - img [ref=f4e60]
+              - generic [ref=f4e62]: Monitoring
+            - link "Laporan" [ref=f4e63] [cursor=pointer]:
+              - /url: /laporan
+              - img [ref=f4e64]
+              - generic [ref=f4e67]: Laporan
+            - link "Verifikasi" [ref=f4e68] [cursor=pointer]:
+              - /url: /verifikasi
+              - img [ref=f4e69]
+              - generic [ref=f4e73]: Verifikasi
+            - link "Manajemen User" [ref=f4e74] [cursor=pointer]:
+              - /url: /user-management
+              - img [ref=f4e75]
+              - generic [ref=f4e77]: Manajemen User
+          - button "Keluar" [ref=f4e80]:
+            - img
+            - generic [ref=f4e81]: Keluar
+      - button
+      - button [ref=f4e82]:
+        - button [ref=f4e83]:
+          - generic [ref=f4e85]:
+            - img
+    - complementary [ref=f4e86]:
+      - generic [ref=f4e87]:
+        - link "SIMPEG RSUD" [ref=f4e89] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=f4e90]
+          - generic [ref=f4e92]: SIMPEG RSUD
+        - navigation [ref=f4e94]:
+          - link "Dashboard" [ref=f4e95] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f4e96]
+            - generic [ref=f4e101]: Dashboard
+          - link "Data Pegawai" [ref=f4e102] [cursor=pointer]:
+            - /url: /pegawai
+            - img [ref=f4e103]
+            - generic [ref=f4e108]: Data Pegawai
+          - link "Master Data" [ref=f4e109] [cursor=pointer]:
+            - /url: /master-data
+            - img [ref=f4e110]
+            - generic [ref=f4e114]: Master Data
+          - link "Monitoring" [ref=f4e115] [cursor=pointer]:
+            - /url: /monitoring
+            - img [ref=f4e116]
+            - generic [ref=f4e118]: Monitoring
+          - link "Laporan" [ref=f4e119] [cursor=pointer]:
+            - /url: /laporan
+            - img [ref=f4e120]
+            - generic [ref=f4e123]: Laporan
+          - link "Verifikasi" [ref=f4e124] [cursor=pointer]:
+            - /url: /verifikasi
+            - img [ref=f4e125]
+            - generic [ref=f4e129]: Verifikasi
+          - link "Manajemen User" [ref=f4e130] [cursor=pointer]:
+            - /url: /user-management
+            - img [ref=f4e131]
+            - generic [ref=f4e133]: Manajemen User
+        - button "Keluar" [ref=f4e136]:
+          - img
+          - generic [ref=f4e137]: Keluar
+    - button
+    - main [ref=f4e138]
+  - region "Notifications alt+T":
+    - list:
+      - listitem [ref=f4e163]:
+        - button "Close toast" [ref=f4e164] [cursor=pointer]:
+          - img [ref=f4e165]
+        - img [ref=f4e169]
+        - generic [ref=f4e172]:
+          - generic [ref=f4e173]: Berhasil masuk
+          - generic [ref=f4e174]: Selamat datang di SIMPEG RSUD.
+  - generic [ref=f4e22] [cursor=pointer]:
+    - button "Open Next.js Dev Tools" [ref=f4e23]:
+      - img [ref=f4e24]
+    - generic [ref=f4e175]:
+      - button "Open issues overlay" [ref=f4e176]:
+        - generic [ref=f4e177]:
+          - generic [ref=f4e178]: "1"
+          - generic [ref=f4e179]: "2"
+        - generic [ref=f4e180]:
+          - text: Issue
+          - generic [ref=f4e181]: s
+      - button "Collapse issues badge" [ref=f4e182]:
+        - img [ref=f4e183]
+  - alert [ref=f4e27]

@@ -1,0 +1,89 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - banner [ref=f1e3]:
+      - complementary [ref=f1e4]:
+        - generic [ref=f1e5]:
+          - link "SIMPEG RSUD" [ref=f1e7] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f1e8]
+            - generic [ref=f1e10]: SIMPEG RSUD
+          - navigation [ref=f1e12]:
+            - link "Dashboard" [ref=f1e13] [cursor=pointer]:
+              - /url: /dashboard
+              - img [ref=f1e14]
+              - generic [ref=f1e19]: Dashboard
+            - link "Data Pegawai" [ref=f1e20] [cursor=pointer]:
+              - /url: /pegawai
+              - img [ref=f1e21]
+              - generic [ref=f1e26]: Data Pegawai
+            - link "Master Data" [ref=f1e27] [cursor=pointer]:
+              - /url: /master-data
+              - img [ref=f1e28]
+              - generic [ref=f1e32]: Master Data
+            - link "Monitoring" [ref=f1e33] [cursor=pointer]:
+              - /url: /monitoring
+              - img [ref=f1e34]
+              - generic [ref=f1e36]: Monitoring
+            - link "Laporan" [ref=f1e37] [cursor=pointer]:
+              - /url: /laporan
+              - img [ref=f1e38]
+              - generic [ref=f1e41]: Laporan
+            - link "Verifikasi" [ref=f1e42] [cursor=pointer]:
+              - /url: /verifikasi
+              - img [ref=f1e43]
+              - generic [ref=f1e47]: Verifikasi
+            - link "Manajemen User" [ref=f1e48] [cursor=pointer]:
+              - /url: /user-management
+              - img [ref=f1e49]
+              - generic [ref=f1e51]: Manajemen User
+          - button "Keluar" [ref=f1e54]:
+            - img
+            - generic [ref=f1e55]: Keluar
+      - button
+      - button
+      - button [ref=f1e56]:
+        - generic [ref=f1e58]:
+          - img
+    - complementary [ref=f1e59]:
+      - generic [ref=f1e60]:
+        - link "SIMPEG RSUD" [ref=f1e62] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=f1e63]
+          - generic [ref=f1e65]: SIMPEG RSUD
+        - navigation [ref=f1e67]:
+          - link "Dashboard" [ref=f1e68] [cursor=pointer]:
+            - /url: /dashboard
+            - img [ref=f1e69]
+            - generic [ref=f1e74]: Dashboard
+          - link "Data Pegawai" [ref=f1e75] [cursor=pointer]:
+            - /url: /pegawai
+            - img [ref=f1e76]
+            - generic [ref=f1e81]: Data Pegawai
+          - link "Master Data" [ref=f1e82] [cursor=pointer]:
+            - /url: /master-data
+            - img [ref=f1e83]
+            - generic [ref=f1e87]: Master Data
+          - link "Monitoring" [ref=f1e88] [cursor=pointer]:
+            - /url: /monitoring
+            - img [ref=f1e89]
+            - generic [ref=f1e91]: Monitoring
+          - link "Laporan" [ref=f1e92] [cursor=pointer]:
+            - /url: /laporan
+            - img [ref=f1e93]
+            - generic [ref=f1e96]: Laporan
+          - link "Verifikasi" [ref=f1e97] [cursor=pointer]:
+            - /url: /verifikasi
+            - img [ref=f1e98]
+            - generic [ref=f1e102]: Verifikasi
+          - link "Manajemen User" [ref=f1e103] [cursor=pointer]:
+            - /url: /user-management
+            - img [ref=f1e104]
+            - generic [ref=f1e106]: Manajemen User
+        - button "Keluar" [ref=f1e109]:
+          - img
+          - generic [ref=f1e110]: Keluar
+    - button
+    - main [ref=f1e111]
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f1e141] [cursor=pointer]:
+    - img [ref=f1e142]
