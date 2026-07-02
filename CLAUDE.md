@@ -37,6 +37,7 @@ Aplikasi web pengelolaan data pegawai, riwayat, KGB, kenaikan pangkat, pensiun, 
 8. **Audit log** — semua perubahan data pegawai tercatat di `pegawai_audit_log`
 9. **Private storage** — dokumen via Supabase Storage private bucket + signed URL
 10. **Supabase wrapper** — Auth, Storage, signed URL, RLS dibungkus service/helper agar mudah diganti
+11. **Commit ke GitHub** — setiap selesai pengerjaan task/fitur, wajib commit dan push ke GitHub sebagai backup
 
 ## File Pengarahan Modular
 
