@@ -94,7 +94,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // Pegawai (role_id 3) tidak boleh akses rute admin
-  if (roleId === 3 && ADMIN_ROUTES.some((route) => pathname.startsWith(route))) {
+  // Kecuali /pegawai/dashboard
+  if (roleId === 3 && pathname !== "/pegawai/dashboard" && ADMIN_ROUTES.some((route) => pathname.startsWith(route))) {
     const url = request.nextUrl.clone();
     url.pathname = "/pegawai/dashboard";
     return NextResponse.redirect(url);
