@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getMasterData } from "@/lib/services/master-data";
+import { getMasterData, createMasterData } from "@/lib/services/master-data";
 import type { MasterTable } from "@/lib/services/master-data";
 import { createClient } from "@/lib/supabase/server";
 
@@ -16,28 +16,54 @@ const VALID_TABLES: MasterTable[] = [
   "struktur_organisasi",
 ];
 
-export async function GET(request: NextRequest) {
+function validate(table: string | null): table is MasterTable {
+  return !!table && VALID_TABLES.includes(table as MasterTable);
+}
+
+async function auth(request: NextRequest) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { user: null, supabase: null };
+  }
+  return { user, supabase };
+}
+
+export async function GET(request: NextRequest) {
+  const { user } = await auth(request);
   if (!user) {
     return NextResponse.json({ error: "Silakan login terlebih dahulu" }, { status: 401 });
   }
 
-  const { searchParams } = request.nextUrl;
-  const table = searchParams.get("table") as MasterTable | null;
-
-  if (!table || !VALID_TABLES.includes(table)) {
-    return NextResponse.json(
-      { error: "Parameter 'table' tidak valid" },
-      { status: 400 }
-    );
+  const table = request.nextUrl.searchParams.get("table");
+  if (!validate(table)) {
+    return NextResponse.json({ error: "Parameter 'table' tidak valid" }, { status: 400 });
   }
 
   const result = await getMasterData(table);
-
   if (result.error) {
     return NextResponse.json({ error: result.error }, { status: 500 });
   }
 
   return NextResponse.json({ data: result.data });
+}
+
+export async function POST(request: NextRequest) {
+  const { user } = await auth(request);
+  if (!user) {
+    return NextResponse.json({ error: "Silakan login terlebih dahulu" }, { status: 401 });
+  }
+
+  const table = request.nextUrl.searchParams.get("table");
+  if (!validate(table)) {
+    return NextResponse.json({ error: "Parameter 'table' tidak valid" }, { status: 400 });
+  }
+
+  const body = await request.json();
+  const result = await createMasterData(table, body);
+  if (result.error) {
+    return NextResponse.json({ error: result.error }, { status: 400 });
+  }
+
+  return NextResponse.json({ success: true, data: result.data });
 }
