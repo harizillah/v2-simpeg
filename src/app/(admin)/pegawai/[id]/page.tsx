@@ -236,8 +236,13 @@ export default function PegawaiDetailPage({ params }: { params: Promise<{ id: st
           <JabatanRSTab pegawaiId={id} data={(data as Record<string, unknown>).pegawai_jabatan_rs as unknown[]} />
         </TabsContent>
 
+        {/* Tab: KGB & Pangkat */}
+        <TabsContent value="kgb">
+          <KgbPangkatTab pegawaiId={id} data={(data as Record<string, unknown>).riwayat_kenaikan as unknown[]} />
+        </TabsContent>
+
         {/* Other tabs: placeholder */}
-        {["kgb", "dokumen", "audit"].map((tab) => (
+        {["dokumen", "audit"].map((tab) => (
           <TabsContent key={tab} value={tab}>
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">
@@ -437,6 +442,86 @@ function SertifikatTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[]
         </DialogContent>
       </Dialog>
     </Card>
+  );
+}
+
+function KgbPangkatTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[] | undefined }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [form, setForm] = useState({ jenis_kenaikan: "kgb", golongan_lama_id: "", golongan_baru_id: "", tmt_seharusnya: "", tmt_kenaikan: "", is_retroaktif: false, keterangan: "" });
+  const { data: golongan } = useMasterData("golongan");
+
+  const handleAdd = async () => {
+    await fetch("/api/riwayat-kenaikan", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ pegawaiId, jenis_kenaikan: form.jenis_kenaikan, golonganLamaId: form.golongan_lama_id ? Number(form.golongan_lama_id) : undefined, golonganBaruId: form.golongan_baru_id ? Number(form.golongan_baru_id) : undefined, tmtSeharusnya: form.tmt_seharusnya, tmtKenaikan: form.tmt_kenaikan || undefined, isRetroaktif: form.is_retroaktif, keterangan: form.keterangan || undefined }) });
+    window.location.reload();
+  };
+
+  const kgbItems = (data || []).filter((i) => (i as Record<string, unknown>).jenis_kenaikan === "kgb");
+  const pangkatItems = (data || []).filter((i) => (i as Record<string, unknown>).jenis_kenaikan === "pangkat");
+
+  return (
+    <div className="space-y-6">
+      <Card><CardHeader className="flex flex-row items-center justify-between"><CardTitle>Riwayat KGB</CardTitle><Button size="sm" onClick={() => { setForm(f => ({ ...f, jenis_kenaikan: "kgb" })); setShowAdd(true); }}>Tambah KGB</Button></CardHeader>
+        <CardContent>{kgbItems.length === 0 ? <p className="py-8 text-center text-muted-foreground">Belum ada riwayat KGB</p> : (
+          <div className="space-y-3">{kgbItems.map((item) => { const i = item as Record<string, unknown>; return (
+            <div key={String(i.id)} className="rounded-lg border p-3">
+              <div className="flex flex-wrap items-center gap-2">
+                {(i.golongan_lama as { pangkat?: string } | null)?.pangkat && (i.golongan_baru as { pangkat?: string } | null)?.pangkat && <Badge variant="secondary">{(i.golongan_lama as { pangkat: string }).pangkat} → {(i.golongan_baru as { pangkat: string }).pangkat}</Badge>}
+                {Boolean(i.is_retroaktif) && <Badge variant="outline">Retroaktif</Badge>}
+              </div>
+              <p className="mt-1 text-sm">TMT Seharusnya: {formatDate(String(i.tmt_seharusnya))}{i.tmt_kenaikan ? ` · TMT Kenaikan: ${formatDate(String(i.tmt_kenaikan))}` : " · Belum diproses"}</p>
+              {Boolean(i.keterangan) && <p className="text-xs text-muted-foreground">{String(i.keterangan)}</p>}
+            </div>
+          );})}</div>
+        )}</CardContent>
+      </Card>
+      <Card><CardHeader className="flex flex-row items-center justify-between"><CardTitle>Riwayat Kenaikan Pangkat</CardTitle><Button size="sm" onClick={() => { setForm(f => ({ ...f, jenis_kenaikan: "pangkat" })); setShowAdd(true); }}>Tambah Pangkat</Button></CardHeader>
+        <CardContent>{pangkatItems.length === 0 ? <p className="py-8 text-center text-muted-foreground">Belum ada riwayat kenaikan pangkat</p> : (
+          <div className="space-y-3">{pangkatItems.map((item) => { const i = item as Record<string, unknown>; return (
+            <div key={String(i.id)} className="rounded-lg border p-3">
+              <div className="flex flex-wrap items-center gap-2">
+                {(i.golongan_lama as { pangkat?: string } | null)?.pangkat && (i.golongan_baru as { pangkat?: string } | null)?.pangkat && <Badge variant="secondary">{(i.golongan_lama as { pangkat: string }).pangkat} → {(i.golongan_baru as { pangkat: string }).pangkat}</Badge>}
+                {Boolean(i.is_override) && <Badge variant="outline">Override</Badge>}
+              </div>
+              <p className="mt-1 text-sm">TMT Seharusnya: {formatDate(String(i.tmt_seharusnya))}{i.tmt_kenaikan ? ` · TMT Kenaikan: ${formatDate(String(i.tmt_kenaikan))}` : " · Belum diproses"}</p>
+              {Boolean(i.alasan_override) && <p className="text-xs text-muted-foreground">Alasan: {String(i.alasan_override)}</p>}
+            </div>
+          );})}</div>
+        )}</CardContent>
+      </Card>
+      <Dialog open={showAdd} onOpenChange={setShowAdd}>
+        <DialogContent><DialogHeader><DialogTitle>Tambah Riwayat Kenaikan</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1"><Label>Jenis</Label>
+              <Select value={form.jenis_kenaikan} onValueChange={(v) => setForm((f) => ({ ...f, jenis_kenaikan: v ?? "kgb" }))}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent><SelectItem value="kgb">KGB</SelectItem><SelectItem value="pangkat">Pangkat</SelectItem></SelectContent>
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1"><Label>Golongan Lama</Label>
+                <Select value={form.golongan_lama_id} onValueChange={(v) => setForm((f) => ({ ...f, golongan_lama_id: v ?? "" }))}>
+                  <SelectTrigger><SelectValue placeholder="Pilih" /></SelectTrigger>
+                  <SelectContent>{(golongan as { id: number; nama: string }[] | undefined)?.map((g) => (<SelectItem key={g.id} value={String(g.id)}>{g.nama}</SelectItem>))}</SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-1"><Label>Golongan Baru</Label>
+                <Select value={form.golongan_baru_id} onValueChange={(v) => setForm((f) => ({ ...f, golongan_baru_id: v ?? "" }))}>
+                  <SelectTrigger><SelectValue placeholder="Pilih" /></SelectTrigger>
+                  <SelectContent>{(golongan as { id: number; nama: string }[] | undefined)?.map((g) => (<SelectItem key={g.id} value={String(g.id)}>{g.nama}</SelectItem>))}</SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1"><Label>TMT Seharusnya</Label><Input type="date" value={form.tmt_seharusnya} onChange={(e) => setForm((f) => ({ ...f, tmt_seharusnya: e.target.value }))} /></div>
+              <div className="space-y-1"><Label>TMT Kenaikan</Label><Input type="date" value={form.tmt_kenaikan} onChange={(e) => setForm((f) => ({ ...f, tmt_kenaikan: e.target.value }))} /></div>
+            </div>
+            <label className="flex items-center gap-2 cursor-pointer"><input type="checkbox" checked={form.is_retroaktif} onChange={(e) => setForm((f) => ({ ...f, is_retroaktif: e.target.checked }))} className="h-4 w-4 rounded border-input" /><span className="text-sm">Retroaktif</span></label>
+            <div className="space-y-1"><Label>Keterangan</Label><Input value={form.keterangan} onChange={(e) => setForm((f) => ({ ...f, keterangan: e.target.value }))} /></div>
+          </div>
+          <DialogFooter><Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button><Button onClick={handleAdd}>Simpan</Button></DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }
 
