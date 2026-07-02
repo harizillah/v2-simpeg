@@ -12,7 +12,7 @@ const PUBLIC_ROUTES = [
 const PEGAWAI_ROUTES = ["/pegawai"];
 
 // Rute khusus admin
-const ADMIN_ROUTES = ["/dashboard", "/pegawai", "/master-data", "/laporan", "/verifikasi", "/user-management"];
+const ADMIN_ROUTES = ["/dashboard", "/pegawai", "/master-data", "/laporan", "/verifikasi", "/user-management", "/monitoring"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

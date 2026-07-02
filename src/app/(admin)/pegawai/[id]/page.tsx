@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -123,11 +124,12 @@ export default function PegawaiDetailPage({ params }: { params: Promise<{ id: st
       </div>
 
       <Tabs defaultValue="identitas">
-        <TabsList>
+        <TabsList className="flex-wrap">
           <TabsTrigger value="identitas">Identitas</TabsTrigger>
           <TabsTrigger value="kepegawaian">Kepegawaian</TabsTrigger>
           <TabsTrigger value="pendidikan">Pendidikan</TabsTrigger>
           <TabsTrigger value="sertifikat">Sertifikat</TabsTrigger>
+          <TabsTrigger value="jabatan">Jabatan RS</TabsTrigger>
           <TabsTrigger value="kgb">KGB & Pangkat</TabsTrigger>
           <TabsTrigger value="dokumen">Dokumen</TabsTrigger>
           <TabsTrigger value="audit">Audit</TabsTrigger>
@@ -224,8 +226,13 @@ export default function PegawaiDetailPage({ params }: { params: Promise<{ id: st
           <PendidikanTab pegawaiId={id} data={(data as Record<string, unknown>).riwayat_pendidikan as unknown[]} />
         </TabsContent>
 
-        {/* Tab: Jabatan RS */}
+        {/* Tab: Sertifikat */}
         <TabsContent value="sertifikat">
+          <SertifikatTab pegawaiId={id} data={(data as Record<string, unknown>).pegawai_sertifikat as unknown[]} />
+        </TabsContent>
+
+        {/* Tab: Jabatan RS */}
+        <TabsContent value="jabatan">
           <JabatanRSTab pegawaiId={id} data={(data as Record<string, unknown>).pegawai_jabatan_rs as unknown[]} />
         </TabsContent>
 
@@ -361,6 +368,72 @@ function PendidikanTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[]
             <Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button>
             <Button onClick={handleAdd}>Simpan</Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </Card>
+  );
+}
+
+function SertifikatTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[] | undefined }) {
+  const [showAdd, setShowAdd] = useState(false);
+  const [form, setForm] = useState({ jenis_sertifikat: "", nama_kegiat_an: "", tmt_kegiat_an: "", penyedia: "", lokasi: "", berlaku_hingga: "", jumlah_jam: "" });
+
+  const handleAdd = async () => {
+    await fetch(`/api/pegawai/${pegawaiId}/sertifikat`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ jenisSertifikat: form.jenis_sertifikat, namaKegiatan: form.nama_kegiat_an, tmtKegiatan: form.tmt_kegiat_an || undefined, penyedia: form.penyedia || undefined, lokasi: form.lokasi || undefined, berlakuHingga: form.berlaku_hingga || undefined, jumlahJam: form.jumlah_jam ? Number(form.jumlah_jam) : undefined }) });
+    window.location.reload();
+  };
+  const handleDelete = async (sertifikatId: string) => { await fetch(`/api/pegawai/${pegawaiId}/sertifikat/${sertifikatId}`, { method: "DELETE" }); window.location.reload(); };
+  const jenisOpts = ["STR", "SIP", "Sertifikat", "Diklat"];
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between"><CardTitle>Sertifikat / STR / SIP</CardTitle><Button size="sm" onClick={() => setShowAdd(true)}>Tambah</Button></CardHeader>
+      <CardContent>
+        {!data || data.length === 0 ? (<p className="py-8 text-center text-muted-foreground">Belum ada sertifikat</p>) : (
+          <div className="space-y-3">
+            {data.map((item) => {
+              const i = item as Record<string, unknown>;
+              const berlakuStr = String(i.berlaku_hingga || "");
+              const isExpired = berlakuStr && new Date(berlakuStr) < new Date();
+              return (
+                <div key={String(i.id)} className="flex items-center justify-between rounded-lg border p-3">
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Badge variant={String(i.jenis_sertifikat) === "STR" ? "default" : String(i.jenis_sertifikat) === "SIP" ? "secondary" : "outline"}>{String(i.jenis_sertifikat || "Sertifikat")}</Badge>
+                      {berlakuStr && (<Badge variant={isExpired ? "destructive" : "secondary"} className="text-xs">{isExpired ? "Kedaluwarsa" : `Berlaku: ${formatDate(berlakuStr)}`}</Badge>)}
+                    </div>
+                    <p className="mt-1 font-medium">{String(i.nama_kegiat_an || "-")}</p>
+                    <p className="text-sm text-muted-foreground">{i.tmt_kegiat_an ? formatDate(String(i.tmt_kegiat_an)) : ""}{i.penyedia ? ` · ${String(i.penyedia)}` : ""}{i.jumlah_jam ? ` · ${String(i.jumlah_jam)} jam` : ""}</p>
+                  </div>
+                  <Button size="sm" variant="ghost" onClick={() => handleDelete(String(i.id))}>Hapus</Button>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </CardContent>
+      <Dialog open={showAdd} onOpenChange={setShowAdd}>
+        <DialogContent>
+          <DialogHeader><DialogTitle>Tambah Sertifikat / STR / SIP</DialogTitle></DialogHeader>
+          <div className="space-y-3">
+            <div className="space-y-1"><Label>Jenis</Label>
+              <Select value={form.jenis_sertifikat} onValueChange={(v) => setForm((f) => ({ ...f, jenis_sertifikat: v ?? "" }))}>
+                <SelectTrigger><SelectValue placeholder="Pilih" /></SelectTrigger>
+                <SelectContent>{jenisOpts.map((j) => (<SelectItem key={j} value={j}>{j}</SelectItem>))}</SelectContent>
+              </Select>
+            </div>
+            <div className="space-y-1"><Label>Nama Kegiatan *</Label><Input value={form.nama_kegiat_an} onChange={(e) => setForm((f) => ({ ...f, nama_kegiat_an: e.target.value }))} required /></div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1"><Label>TMT Kegiatan</Label><Input type="date" value={form.tmt_kegiat_an} onChange={(e) => setForm((f) => ({ ...f, tmt_kegiat_an: e.target.value }))} /></div>
+              <div className="space-y-1"><Label>Jumlah Jam</Label><Input type="number" value={form.jumlah_jam} onChange={(e) => setForm((f) => ({ ...f, jumlah_jam: e.target.value }))} /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1"><Label>Penyedia</Label><Input value={form.penyedia} onChange={(e) => setForm((f) => ({ ...f, penyedia: e.target.value }))} /></div>
+              <div className="space-y-1"><Label>Lokasi</Label><Input value={form.lokasi} onChange={(e) => setForm((f) => ({ ...f, lokasi: e.target.value }))} /></div>
+            </div>
+            <div className="space-y-1"><Label>Berlaku Hingga</Label><Input type="date" value={form.berlaku_hingga} onChange={(e) => setForm((f) => ({ ...f, berlaku_hingga: e.target.value }))} /></div>
+          </div>
+          <DialogFooter><Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button><Button onClick={handleAdd}>Simpan</Button></DialogFooter>
         </DialogContent>
       </Dialog>
     </Card>

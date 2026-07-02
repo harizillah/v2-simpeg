@@ -15,6 +15,7 @@ import {
   Shield,
   Menu,
   LogOut,
+  AlertTriangle,
 } from "lucide-react";
 import { logout } from "@/lib/helpers/auth";
 
@@ -42,6 +43,12 @@ const navItems: NavItem[] = [
     title: "Master Data",
     href: "/master-data",
     icon: <Database className="h-5 w-5" />,
+    roles: [1, 2],
+  },
+  {
+    title: "Monitoring",
+    href: "/monitoring",
+    icon: <AlertTriangle className="h-5 w-5" />,
     roles: [1, 2],
   },
   {
