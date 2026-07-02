@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/lib/supabase/server";
+import { createServiceClient } from "@/lib/supabase/service";
 import { redirect } from "next/navigation";
 
 const NIK_REGEX = /^\d{16}$/;
@@ -39,8 +40,9 @@ export async function loginWithEmailOrNIK(
     };
   }
 
-  // Cek role
-  const { data: profile } = await supabase
+  // Gunakan service client untuk bypass RLS saat cek profile
+  const serviceSupabase = createServiceClient();
+  const { data: profile } = await serviceSupabase
     .from("profiles")
     .select("role_id, roles(name)")
     .eq("id", data.user.id)
@@ -60,7 +62,7 @@ export async function loginWithEmailOrNIK(
   if (profile.roles && typeof profile.roles === "object" && "name" in profile.roles) {
     roleName = (profile.roles as { name: string }).name;
   } else {
-    const { data: roleData } = await supabase
+    const { data: roleData } = await serviceSupabase
       .from("roles")
       .select("name")
       .eq("id", profile.role_id)
@@ -80,7 +82,7 @@ export async function logout(): Promise<void> {
 export async function getUserRole(
   userId: string
 ): Promise<string | null> {
-  const supabase = await createClient();
+  const supabase = createServiceClient();
   const { data } = await supabase
     .from("profiles")
     .select("roles(name)")
