@@ -6,7 +6,6 @@ import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Button, buttonVariants } from "@/components/ui/button"
-import { useEffect } from "react"
 
 function IconPlaceholder({
   className,
