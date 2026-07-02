@@ -1,4 +1,5 @@
 import { Header } from "@/components/admin/header";
+import { Sidebar } from "@/components/admin/sidebar";
 
 export default function AdminLayout({
   children,
@@ -8,6 +9,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen">
       <Header />
+      <Sidebar />
       <main className="lg:pl-64">
         <div className="container mx-auto p-4 lg:p-6">{children}</div>
       </main>

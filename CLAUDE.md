@@ -38,6 +38,7 @@ Aplikasi web pengelolaan data pegawai, riwayat, KGB, kenaikan pangkat, pensiun, 
 9. **Private storage** — dokumen via Supabase Storage private bucket + signed URL
 10. **Supabase wrapper** — Auth, Storage, signed URL, RLS dibungkus service/helper agar mudah diganti
 11. **Commit ke GitHub** — setiap selesai pengerjaan task/fitur, wajib commit dan push ke GitHub sebagai backup
+12. **Perbarui CLAUDE.md** — setelah fitur/task selesai dan berfungsi, perbarui CLAUDE.md dengan pola baru, file baru, keputusan arsitektur, atau konvensi yang muncul. Gunakan `/init` atau perbarui langsung. Jangan menunda — lakukan sebelum commit terakhir fitur tersebut.
 
 ## File Pengarahan Modular
 
