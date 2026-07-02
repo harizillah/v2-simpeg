@@ -241,8 +241,13 @@ export default function PegawaiDetailPage({ params }: { params: Promise<{ id: st
           <KgbPangkatTab pegawaiId={id} data={(data as Record<string, unknown>).riwayat_kenaikan as unknown[]} />
         </TabsContent>
 
+        {/* Tab: Dokumen */}
+        <TabsContent value="dokumen">
+          <DokumenTab pegawaiId={id} data={(data as Record<string, unknown>).dokumen_pegawai as unknown[]} />
+        </TabsContent>
+
         {/* Other tabs: placeholder */}
-        {["dokumen", "audit"].map((tab) => (
+        {["audit"].map((tab) => (
           <TabsContent key={tab} value={tab}>
             <Card>
               <CardContent className="py-12 text-center text-muted-foreground">
@@ -441,6 +446,73 @@ function SertifikatTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[]
           <DialogFooter><Button variant="outline" onClick={() => setShowAdd(false)}>Batal</Button><Button onClick={handleAdd}>Simpan</Button></DialogFooter>
         </DialogContent>
       </Dialog>
+    </Card>
+  );
+}
+
+function DokumenTab({ pegawaiId, data }: { pegawaiId: string; data: unknown[] | undefined }) {
+  const handleDownload = (id: string) => { window.open(`/api/dokumen-pegawai/${id}`, "_blank"); };
+  const handleDelete = async (id: string) => {
+    await fetch(`/api/dokumen-pegawai/${id}`, { method: "DELETE" });
+    window.location.reload();
+  };
+
+  const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fd = new FormData(e.currentTarget);
+    fd.set("pegawai_id", pegawaiId);
+    const res = await fetch("/api/dokumen-pegawai", { method: "POST", body: fd });
+    if (!res.ok) { const err = await res.json(); alert(err.error); return; }
+    window.location.reload();
+  };
+
+  return (
+    <Card>
+      <CardHeader className="flex flex-row items-center justify-between"><CardTitle>Dokumen Digital</CardTitle></CardHeader>
+      <CardContent>
+        <form onSubmit={handleUpload} className="mb-4 flex flex-wrap gap-3 items-end rounded-lg border p-4 bg-muted/30">
+          <div className="space-y-1">
+            <Label>Kategori</Label>
+            <select name="kategori_dokumen" className="flex h-10 rounded-md border border-input bg-background px-3 py-2 text-sm" required>
+              <option value="">Pilih</option>
+              {["Identitas","Pendidikan","Kepegawaian","Kepangkatan","KGB","Profesi","Kontrak","Lainnya"].map(k => (<option key={k} value={k}>{k}</option>))}
+            </select>
+          </div>
+          <div className="space-y-1"><Label>Nama Dokumen</Label><Input name="nama_dokumen" required /></div>
+          <div className="space-y-1"><Label>File (PDF/JPG/PNG, max 5MB)</Label><Input name="file" type="file" accept=".pdf,.jpg,.jpeg,.png" required /></div>
+          <div className="space-y-1"><Label>Nomor Dokumen</Label><Input name="nomor_dokumen" /></div>
+          <div className="space-y-1"><Label>Tanggal Dokumen</Label><Input name="tanggal_dokumen" type="date" /></div>
+          <div className="space-y-1"><Label>Tgl Berakhir</Label><Input name="tanggal_berakhir" type="date" /></div>
+          <Button type="submit">Upload</Button>
+        </form>
+
+        {!data || data.length === 0 ? (
+          <p className="py-8 text-center text-muted-foreground">Belum ada dokumen</p>
+        ) : (
+          <div className="space-y-3">
+            {data.map((item) => { const i = item as Record<string, unknown>; return (
+              <div key={String(i.id)} className="flex items-center justify-between rounded-lg border p-3">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <Badge variant="outline">{String(i.kategori_dokumen)}</Badge>
+                    {!Boolean(i.is_active) && <Badge variant="destructive">Nonaktif</Badge>}
+                  </div>
+                  <p className="font-medium">{String(i.nama_dokumen)}</p>
+                  <p className="text-xs text-muted-foreground">{String(i.file_name)} · {(i.file_size as number) ? `${Math.round((Number(i.file_size) / 1024))} KB` : ""}{i.tanggal_dokumen ? ` · ${formatDate(String(i.tanggal_dokumen))}` : ""}</p>
+                </div>
+                <div className="flex gap-1">
+                  {Boolean(i.is_active) && (
+                    <>
+                      <Button size="sm" variant="outline" onClick={() => handleDownload(String(i.id))}>Download</Button>
+                      <Button size="sm" variant="ghost" onClick={() => handleDelete(String(i.id))}>Hapus</Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            );})}
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 }
